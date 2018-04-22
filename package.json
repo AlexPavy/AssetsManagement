@@ -1,0 +1,19 @@
+{
+  "name": "bulbthingstest",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "alex pavy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "github:expressjs/express",
+    "mocha": "mochajs/mocha#4727d357ea",
+    "module": "user/repo#feature/branch",
+    "pg": "^7.4.1",
+    "sequelize": "^4.37.6"
+  }
+}
