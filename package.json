@@ -4,19 +4,29 @@
   "description": "test",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "NODE_ENV=test mocha --exit",
+    "start": "node src/server.js"
   },
   "author": "alex pavy",
   "license": "ISC",
   "dependencies": {
-    "chai": "^4.1.2",
     "config": "^1.30.0",
     "express": "github:expressjs/express",
-    "mocha": "mochajs/mocha#4727d357ea",
     "module": "user/repo#feature/branch",
     "pg": "^7.4.1",
-    "sequelize": "^4.37.6",
+    "sequelize": "^4.37.6"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "chai": "^4.1.2",
+    "mocha": "mochajs/mocha#4727d357ea",
+    "prettier": "^1.12.1",
     "supertest": "^3.0.0"
   }
 }

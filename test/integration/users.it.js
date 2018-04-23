@@ -19,12 +19,13 @@ describe('/users endpoint', () => {
 
   it('should patch', async () => {
     const userParams = {firstName: 'Uncle Fester', lastName: 'Addams'};
-    const updatedUserParams = {firstName: 'Fester', lastName: 'Addams'};
+    const updateUserParams = {firstName: 'Fester'};
+    const patchedUserParams = {firstName: 'Fester', lastName: 'Addams'};
     const created = await models.User.create(userParams);
-    const updated = await request(server).patch(`/users/${created.dataValues.id}`).send(updatedUserParams);
-    expect(updated.body).to.deep.include(updatedUserParams);
+    const updated = await request(server).patch(`/users/${created.dataValues.id}`).send(updateUserParams);
+    expect(updated.body).to.deep.include(updateUserParams);
     const loadedUser = await models.User.findById(created.dataValues.id);
-    expect(loadedUser.dataValues).to.deep.include(updatedUserParams);
+    expect(loadedUser.dataValues).to.deep.include(patchedUserParams);
   });
 
   it('should delete', async () => {
