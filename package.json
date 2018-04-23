@@ -10,10 +10,13 @@
   "author": "alex pavy",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.1.2",
+    "config": "^1.30.0",
     "express": "github:expressjs/express",
     "mocha": "mochajs/mocha#4727d357ea",
     "module": "user/repo#feature/branch",
     "pg": "^7.4.1",
-    "sequelize": "^4.37.6"
+    "sequelize": "^4.37.6",
+    "supertest": "^3.0.0"
   }
 }

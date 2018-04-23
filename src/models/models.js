@@ -1,12 +1,19 @@
 const Sequelize = require('sequelize');
 const createUserModel = require('./user');
-const env       = process.env.NODE_ENV || 'development';
-const config    = require('../../config/config.json')[env];
+const configurations = require('../../config/configurations');
 
+const config = configurations.getConfig('database');
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+const User = createUserModel(sequelize, Sequelize);
+
+function resetAll() {
+  return User.truncate();
+}
+
 const Models = {
-  User: createUserModel(sequelize, Sequelize),
+  User,
+  resetAll,
 };
 
 module.exports = Models;
