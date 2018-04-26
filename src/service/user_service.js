@@ -23,10 +23,10 @@ async function deleteUser(request) {
   return user.destroy();
 }
 
-export {
+module.exports = {
   createUser,
+  updateUser,
+  deleteUser,
   getUsers,
   getUser,
-  updateUser,
-  deleteUser
 };

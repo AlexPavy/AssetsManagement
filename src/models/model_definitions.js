@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
 
-  const User = sequelize.define('User', {
+  const User = sequelize.define('Users', {
     id:{
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
   }, {});
 
-  const AssetType = sequelize.define('AssetType', {
+  const AssetType = sequelize.define('AssetTypes', {
     id:{
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -24,28 +24,29 @@ module.exports = (sequelize, DataTypes) => {
     attributeTypes: DataTypes.JSONB,
   }, {});
 
-  const Asset = sequelize.define('Asset', {
+  const Asset = sequelize.define('Assets', {
     id:{
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    assetTypeId: {
-      type: DataTypes.INTEGER,
-    },
-    attributes: DataTypes.JSONB,
+    AssetTypeId: DataTypes.INTEGER,
+    assetAttributes: DataTypes.JSONB,
   }, {});
 
-  const Allocation = sequelize.define('Allocation', {
+  const Allocation = sequelize.define('Allocations', {
     id:{
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    userId: {
-      type: DataTypes.DATE,
+    UserId: {
+      type: DataTypes.INTEGER,
+    },
+    AssetId: {
+      type: DataTypes.INTEGER,
     },
     startDate: {
       type: DataTypes.DATE,
@@ -55,9 +56,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
 
-  Asset.hasOne(AssetType);
+  Asset.belongsTo(AssetType);
   Allocation.belongsTo(User);
-  Allocation.hasOne(Asset);
+  Allocation.belongsTo(Asset);
 
   return {
     User,

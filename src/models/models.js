@@ -9,10 +9,10 @@ const { User, Allocation, Asset, AssetType } = createModels(sequelize, Sequelize
 
 function resetAll() {
   return Promise.all([
-    User.truncate(),
-    Asset.truncate(),
-    AssetType.truncate(),
-    Allocation.truncate(),
+    User.destroy({ truncate : true, cascade: true }),
+    Asset.destroy({ truncate : true, cascade: true }),
+    AssetType.destroy({ truncate : true, cascade: true }),
+    Allocation.destroy({ truncate : true, cascade: true }),
   ]);
 }
 

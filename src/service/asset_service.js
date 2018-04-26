@@ -2,14 +2,21 @@ const models = require('../models/models');
 
 async function createAsset(request) {
   const assetParams = request.body;
-  const assetType = models.AssetType.findById(assetParams.assetTypeId);
-  const errors = validateAttributes(assetParams.attributes, assetType.attributeTypes);
-  if (errors.length) {
-    const error = new Error();
-    error.attributes = errors;
-    throw error;
-  }
-  return models.Asset.create(request.body)
+  validateAsset(assetParams);
+  return models.Asset.create(assetParams)
+}
+
+async function updateAsset(request) {
+  const assetParams = request.body;
+  const asset = await models.Asset.findById(request.params.id);
+  Object.assign(asset, assetParams);
+  validateAsset(assetParams);
+  return assetParams.save();
+}
+
+async function deleteAsset(request) {
+  const asset = await models.Asset.findById(request.params.id);
+  return asset.destroy();
 }
 
 async function getAssets() {
@@ -20,27 +27,18 @@ async function getAsset(request) {
   return models.Asset.findById(request.params.id);
 }
 
-async function updateAsset(request) {
-  const assetParams = request.body;
-  const asset = await models.Asset.findById(request.params.id);
-  Object.assign(asset, assetParams);
-  const assetType = models.AssetType.findById(assetParams.assetTypeId);
-  const errors = validateAttributes(assetParams.attributes, assetType.attributeTypes);
+function validateAsset(asset) {
+  const assetType = models.AssetType.findById(asset.assetTypeId);
+  const errors = checkAttributes(asset.assetAttributes, assetType.attributeTypes);
   if (errors.length) {
     const error = new Error();
     error.attributes = errors;
     throw error;
   }
-  return assetParams.save();
-}
-
-async function deleteAsset(request) {
-  const asset = await models.Asset.findById(request.params.id);
-  return asset.destroy();
 }
 
 /**
- * Deep validation that asset.attributes match assetType.attributeTypes
+ * Deep validation that asset.assetAttributes match assetType.attributeTypes
  * Ex (valid):
  * attributes = {
  *   color: "red",
@@ -55,24 +53,24 @@ async function deleteAsset(request) {
  *   },
  * }
  */
-function validateAttributes(attributes, types) {
+function checkAttributes(attributes, types) {
   const errors = [];
   for (const key in attributes) {
     const type = types[key].jstype;
     if (typeof attributes[key] !== typeof type) {
       errors.push({
-        type: types[key],
+        type: `${key}: ${JSON.stringify(types[key])}`,
         value: attributes[key]
-      })
+      });
     }
   }
   return errors;
 }
 
-export {
+module.exports = {
   createAsset,
+  updateAsset,
+  deleteAsset,
   getAssets,
   getAsset,
-  updateAsset,
-  deleteAsset
 };

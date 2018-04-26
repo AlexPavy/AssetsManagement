@@ -17,6 +17,7 @@
     "sequelize": "^4.37.6"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
@@ -24,9 +25,9 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "chai": "^4.1.2",
     "mocha": "mochajs/mocha#4727d357ea",
     "prettier": "^1.12.1",
+    "sinon": "^4.5.0",
     "supertest": "^3.0.0"
   }
 }

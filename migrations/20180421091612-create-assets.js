@@ -8,12 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      assetTypeId: {
+      AssetTypeId: {
         allowNull: false,
         references: { model: 'AssetTypes', key: 'id' },
         type: Sequelize.INTEGER
       },
-      attributes: {
+      assetAttributes: {
         type: Sequelize.JSONB
       },
       createdAt: {
@@ -27,6 +27,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('AssetTypes');
+    return queryInterface.dropTable('Assets');
   }
 };

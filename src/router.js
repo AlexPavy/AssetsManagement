@@ -44,13 +44,15 @@ router
 
 function apiMethodWrapper(routeMethod, request, response) {
   return routeMethod(request)
-    .then(res => {
-      return response.send(res)
-    })
+    .then(res => response.send(res))
     .catch(e => {
-      console.log(e);
-      response.send(e.attributes);
-      response.status(400);
+      if (e.attributes) {
+        response.status(400);
+        response.send(e.attributes);
+      } else {
+        response.status(500);
+        response.send(e.message);
+      }
     });
 }
 
