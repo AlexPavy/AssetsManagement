@@ -7,7 +7,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 const { User, Allocation, Asset, AssetType } = createModels(sequelize, Sequelize);
 
-function resetAll() {
+async function resetAll() {
   return Promise.all([
     User.destroy({ truncate : true, cascade: true }),
     Asset.destroy({ truncate : true, cascade: true }),

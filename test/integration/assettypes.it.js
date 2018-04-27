@@ -23,9 +23,9 @@ describe('/assettypes endpoint', () => {
     const assetTypeParams = {
       attributeTypes: {color: {invalidKey: ""}, size: {jstype: 0}}
     };
-    const created = await request(server).post('/assetTypes').send(assetTypeParams);
-    expect(created.error.message).to.equal("cannot POST /assetTypes (400)");
-    expect(created.body[0]).to.deep.include({
+    const result = await request(server).post('/assetTypes').send(assetTypeParams);
+    expect(result.error.message).to.equal("cannot POST /assetTypes (400)");
+    expect(result.body[0]).to.deep.include({
       "type": "color",
       "value": "Missing jstype"
     });

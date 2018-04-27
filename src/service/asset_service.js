@@ -2,7 +2,7 @@ const models = require('../models/models');
 
 async function createAsset(request) {
   const assetParams = request.body;
-  validateAsset(assetParams);
+  await validateAsset(assetParams);
   return models.Asset.create(assetParams)
 }
 
@@ -10,7 +10,7 @@ async function updateAsset(request) {
   const assetParams = request.body;
   const asset = await models.Asset.findById(request.params.id);
   Object.assign(asset, assetParams);
-  validateAsset(assetParams);
+  await validateAsset(assetParams);
   return assetParams.save();
 }
 
@@ -27,8 +27,16 @@ async function getAsset(request) {
   return models.Asset.findById(request.params.id);
 }
 
-function validateAsset(asset) {
-  const assetType = models.AssetType.findById(asset.assetTypeId);
+async function validateAsset(asset) {
+  const assetType = await models.AssetType.findById(asset.AssetTypeId);
+  if (!assetType) {
+    const error = new Error();
+    error.attributes = [{
+      type: 'AssetTypeId',
+      value: asset.AssetTypeId
+    }];
+    throw error;
+  }
   const errors = checkAttributes(asset.assetAttributes, assetType.attributeTypes);
   if (errors.length) {
     const error = new Error();

@@ -4,7 +4,7 @@
   "description": "test",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --exit",
+    "test-integration": "set NODE_ENV=test&& mocha ./test/integration --exit",
     "start": "node src/server.js"
   },
   "author": "alex pavy",
