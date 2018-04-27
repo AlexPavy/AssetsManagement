@@ -7,7 +7,7 @@ const assetService = require('../../src/service/asset_service');
 const assetTypeService = require('../../src/service/assettype_service');
 const expect = chai.expect;
 
-describe('/assets endpoint', () => {
+describe('/allocations endpoint', () => {
 
   let assetType, user, user2, asset, asset2;
   beforeEach(async () => {

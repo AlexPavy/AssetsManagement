@@ -9,14 +9,14 @@ Later, asset types could declare more validation rules.
 
 ## Routes
 
-### /endpoint
-We have common routes for all objects
-endpoint can be replaced users, assettypes, assets, allocations
-
 ### Authentication
 
 Routes must be called with a header x-api-key.
 The possible keys are in [secret keys](https://github.com/AlexPavy/AssetsManagement/blob/master/config/secret_keys.json)
+
+### /endpoint
+We have common routes for all objects
+endpoint can be replaced users, assettypes, assets, allocations
 
 #### POST /endpoint
 Create an object with JSON body:
@@ -60,15 +60,15 @@ Only common routes are available
 Example asset type:
 ```js
 assetType = {
-	"name": "With color and size",
-	"attributeTypes": {
-		"color": {
-			"jstype": "" // string
-		},
-		"size": {
-        	"jstype": 0 // number
-        }
-	}
+    "name": "With color and size",
+    "attributeTypes": {
+        "color": {
+            "jstype": "" // string
+         },
+         "size": {
+            "jstype": 0 // number
+         }
+    }
 }
 ```
 
