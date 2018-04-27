@@ -82,7 +82,7 @@ Example asset:
 
 ### /allocations
 Common routes are available.
-Also, allocations cannot be created on the same user, or the same asset, with overlapping dates.
+Also, allocations cannot be created on the same asset, with overlapping dates.
 Example allocation:
 ```json
 {
