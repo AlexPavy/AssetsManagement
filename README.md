@@ -1,23 +1,21 @@
 # Assets Management
-Assets management API
 
 Manage users, asset types, assets, and allocations.
 - Asset types are a generic declaration of attributes with types that can be implemented by assets.
 Later, asset types could declare more validation rules.
-- Asset are generic objects that are typed by an asset type
+- Assets are generic objects that are typed by an asset type
 - Allocations associate 1 asset with 1 user for a period of time.
 1 user cannot have multiple allocations at the same time.
 1 asset cannot have multiple allocations at the same time.
 
 ## Routes
 
-### /<endpoint>
-We have common routes for all objetcs
-<common> can be replaced users, assettypes, assets, allocations
+### /endpoint
+We have common routes for all objects
+endpoint can be replaced users, assettypes, assets, allocations
 
-#### POST /<endpoint>
-Create an object.
-Example body for a user
+#### POST /endpoint
+Create an object with JSON body:
 ```json
 {
 	"a1": "v1",
@@ -25,22 +23,21 @@ Example body for a user
 }
 ```
 
-#### PATCH /<endpoint>:id
-Update an object.
-Example body for an update.
+#### PATCH /endpoint:id
+Update an object with JSON body:
 ```json
 {
 	"a1": "v2"
 }
 ```
 
-#### DELETE /<endpoint>:id
+#### DELETE /endpoint:id
 Delete an object by id.
 
-#### GET /<endpoint>:id
+#### GET /endpoint:id
 Get an object by id
 
-#### GET /<endpoint>
+#### GET /endpoint
 Get all objects
 
 ### /users
@@ -57,8 +54,8 @@ Example user:
 ### /assettypes
 Only common routes are available
 Example asset type:
-```json
-{
+```js
+assetType = {
 	"name": "With color and size",
 	"attributeTypes": {
 		"color": {
@@ -72,7 +69,7 @@ Example asset type:
 ```
 
 ### /assets
-Only common routes are available, but assets have validated with the asset type
+Only common routes are available, but assets are validated with the asset type.
 Example asset:
 ```json
 {
@@ -85,7 +82,8 @@ Example asset:
 ```
 
 ### /allocations
-Common routes are available
+Common routes are available.
+Also, allocations cannot be created on the same user, or the same asset, with overlapping dates.
 Example allocation:
 ```json
 {
