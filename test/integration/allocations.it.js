@@ -38,7 +38,7 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: "2018-04-28T23:30:55.000Z"
     };
-    const created = await request(server).post('/allocations').send(allocation);
+    const created = await request(server).post('/allocations').set("x-api-key", "ky").send(allocation);
     expect(!!parseInt(created.body.id)).to.be.true;
     expect(created.body).to.deep.include(allocation);
     const loadedAllocation = await models.Allocation.findById(created.body.id);
@@ -57,7 +57,7 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: "2018-04-28T23:30:55.000Z"
     };
-    const result = await request(server).post('/allocations').send(allocation);
+    const result = await request(server).post('/allocations').set("x-api-key", "ky").send(allocation);
     expect(result.error.message).to.equal("cannot POST /allocations (400)");
     expect(result.body[0]).to.deep.include({
       "type": "AssetId",
@@ -72,7 +72,7 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: "2018-04-28T23:30:55.000Z"
     };
-    const result = await request(server).post('/allocations').send(allocation);
+    const result = await request(server).post('/allocations').set("x-api-key", "ky").send(allocation);
     expect(result.error.message).to.equal("cannot POST /allocations (400)");
     expect(result.body[0]).to.deep.include({
       "type": "UserId",
@@ -87,7 +87,7 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-28T23:30:55.000Z",
       endDate: "2018-04-26T23:30:55.000Z"
     };
-    const result = await request(server).post('/allocations').send(allocation);
+    const result = await request(server).post('/allocations').set("x-api-key", "ky").send(allocation);
     expect(result.error.message).to.equal("cannot POST /allocations (400)");
     expect(result.body.length).to.equal(2);
     expect(result.body[0]).to.deep.include({
@@ -103,14 +103,15 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: "2018-04-28T23:30:55.000Z"
     };
-    const allocation1Created = await request(server).post('/allocations').send(allocation1);
+    const allocation1Created = await request(server)
+      .post('/allocations').set("x-api-key", "ky").send(allocation1);
     const allocation2 = {
       AssetId: asset.id,
       UserId: user2.id,
       startDate: "2018-04-27T23:30:55.000Z",
       endDate: "2018-04-29T23:30:55.000Z"
     };
-    const result = await request(server).post('/allocations').send(allocation2);
+    const result = await request(server).post('/allocations').set("x-api-key", "ky").send(allocation2);
     expect(result.error.message).to.equal("cannot POST /allocations (400)");
     expect(result.body[0]).to.deep.include({
       "type": "Date",
@@ -131,9 +132,10 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: "2018-04-28T23:30:55.000Z"
     });
-    const allAllocations = await request(server).get(`/allocations`);
+    const allAllocations = await request(server).get(`/allocations`).set("x-api-key", "ky");
     expect(allAllocations.body.length).to.equal(2);
-    const allocationsOfUser1 = await request(server).get(`/allocations?UserId=${user.id}`);
+    const allocationsOfUser1 = await request(server).get(`/allocations?UserId=${user.id}`)
+      .set("x-api-key", "ky");
     expect(allocationsOfUser1.body.length).to.equal(1);
     expect(allocationsOfUser1.body[0].UserId).to.equal(user.id);
   });
@@ -151,9 +153,10 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: "2018-04-28T23:30:55.000Z"
     });
-    const allAllocations = await request(server).get(`/allocations`);
+    const allAllocations = await request(server).get(`/allocations`).set("x-api-key", "ky");
     expect(allAllocations.body.length).to.equal(2);
-    const allocationsOfAsset2 = await request(server).get(`/allocations?AssetId=${asset2.id}`);
+    const allocationsOfAsset2 = await request(server).get(`/allocations?AssetId=${asset2.id}`)
+      .set("x-api-key", "ky");
     expect(allocationsOfAsset2.body.length).to.equal(1);
     expect(allocationsOfAsset2.body[0].AssetId).to.equal(asset2.id);
   });
@@ -173,9 +176,9 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: tomorrow,
     });
-    const allAllocations = await request(server).get(`/allocations`);
+    const allAllocations = await request(server).get(`/allocations`).set("x-api-key", "ky");
     expect(allAllocations.body.length).to.equal(2);
-    const currentAllocations = await request(server).get(`/allocations?current=true`);
+    const currentAllocations = await request(server).get(`/allocations?current=true`).set("x-api-key", "ky");
     expect(currentAllocations.body.length).to.equal(1);
     expect(currentAllocations.body[0].AssetId).to.equal(asset2.id);
   });
@@ -201,9 +204,10 @@ describe('/assets endpoint', () => {
       startDate: "2018-04-26T23:30:55.000Z",
       endDate: tomorrow,
     });
-    const currentAllocations = await request(server).get(`/allocations?current=true`);
+    const currentAllocations = await request(server).get(`/allocations?current=true`).set("x-api-key", "ky");
     expect(currentAllocations.body.length).to.equal(2);
-    const currentAllocationsForUser = await request(server).get(`/allocations?current=true&UserId=${user.id}`);
+    const currentAllocationsForUser = await request(server).get(`/allocations?current=true&UserId=${user.id}`)
+      .set("x-api-key", "ky");
     expect(currentAllocationsForUser.body.length).to.equal(1);
     expect(currentAllocationsForUser.body[0].AssetId).to.equal(asset2.id);
     expect(currentAllocationsForUser.body[0].UserId).to.equal(user.id);
