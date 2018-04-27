@@ -3,6 +3,7 @@ const userService = require('./service/user_service');
 const assetTypeService = require('./service/assettype_service');
 const assetService = require('./service/asset_service');
 const allocationService = require('./service/allocation_service');
+const configurations = require('../config/configurations');
 
 const router = express.Router();
 router
@@ -43,6 +44,15 @@ router
   .delete((req, res) => apiMethodWrapper(allocationService.deleteAllocation, req, res));
 
 function apiMethodWrapper(routeMethod, request, response) {
+  if (!checkHasApiKey(request)) {
+    response.status(401);
+    response.send({
+      type: 'API key',
+      value: 'Invalid',
+    });
+    return;
+  }
+
   return routeMethod(request)
     .then(res => response.send(res))
     .catch(e => {
@@ -54,6 +64,12 @@ function apiMethodWrapper(routeMethod, request, response) {
         response.send(e.message);
       }
     });
+}
+
+function checkHasApiKey(request) {
+  if (!request.headers["x-api-key"]) return false;
+  if (!configurations.getApiKeys().includes(request.headers["x-api-key"])) return false;
+  return true;
 }
 
 module.exports = router;

@@ -3,6 +3,11 @@ function getConfig(type) {
   return require(`./${type}.${env}.json`);
 }
 
+function getApiKeys() {
+  return require("./secret_keys")
+}
+
 module.exports = {
-  getConfig
+  getConfig,
+  getApiKeys,
 };

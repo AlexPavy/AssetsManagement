@@ -20,8 +20,19 @@ describe('router', () => {
     const assetTypeParams = {
       attributeTypes: {size: {jstype: 0}}
     };
-    const created = await request(server).post('/assetTypes').send(assetTypeParams);
+    const created = await request(server).post('/assetTypes').set("x-api-key", "ky").send(assetTypeParams);
     expect(created.error.message).to.equal("cannot POST /assetTypes (500)");
+  });
+
+  it('should reply 401 in case the x-api-key is missing', async () => {
+    sandbox.stub(models.AssetType, 'create').callsFake(() => {
+      throw new Error();
+    });
+    const assetTypeParams = {
+      attributeTypes: {size: {jstype: 0}}
+    };
+    const created = await request(server).post('/assetTypes').set("x-api-key", "invalid").send(assetTypeParams);
+    expect(created.error.message).to.equal("cannot POST /assetTypes (401)");
   });
 
 });

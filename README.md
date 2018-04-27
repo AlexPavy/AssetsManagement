@@ -13,6 +13,11 @@ Later, asset types could declare more validation rules.
 We have common routes for all objects
 endpoint can be replaced users, assettypes, assets, allocations
 
+### Authentication
+
+Routes must be called with a header x-api-key.
+The possible keys are in [secret keys](https://github.com/AlexPavy/AssetsManagement/blob/master/config/secret_keys.json)
+
 #### POST /endpoint
 Create an object with JSON body:
 ```json
