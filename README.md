@@ -5,7 +5,6 @@ Manage users, asset types, assets, and allocations.
 Later, asset types could declare more validation rules.
 - Assets are generic objects that are typed by an asset type
 - Allocations associate 1 asset with 1 user for a period of time.
-1 user cannot have multiple allocations at the same time.
 1 asset cannot have multiple allocations at the same time.
 
 ## Routes

@@ -1,10 +1,10 @@
 {
-  "name": "Assets Management",
+  "name": "AssetManagement",
   "version": "1.0.0",
   "description": "test",
   "main": "server.js",
   "scripts": {
-    "test-integration": "set NODE_ENV=test&& mocha ./test/integration --exit",
+    "test": "set NODE_ENV=test&& mocha ./test/integration --exit",
     "start": "node src/server.js"
   },
   "author": "alex pavy",

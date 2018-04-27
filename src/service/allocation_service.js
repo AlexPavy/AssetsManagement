@@ -78,12 +78,6 @@ async function checkAssetExists(allocation) {
 
 async function checkAvailable(params) {
   const errors = [];
-  const userAllocations = await models.Allocation.findAll({where: {UserId: params.UserId}});
-  errors.push(...checkAllocationOverlap(params, userAllocations)
-    .map(error => {
-      error.value = `User allocation ${error.value} overlap`;
-      return error;
-    }));
   const assetAllocations = await models.Allocation.findAll({where: {AssetId: params.AssetId}});
   errors.push(...checkAllocationOverlap(params, assetAllocations).map(error => {
     error.value = `Asset allocation ${error.value} overlap`;
